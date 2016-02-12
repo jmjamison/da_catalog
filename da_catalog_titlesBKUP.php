@@ -21,7 +21,8 @@
 <div id="container">
 
 
-<?php  include("../SSDA_menubar.php");  
+<?php  
+	include("../_includes/SSDA_menubar.php");  
 //
 // SSDA_menubar.php has the menu code for da_catalog, da_catalog_fielder(fielder collection) and 'archive reources'
 //
@@ -34,48 +35,55 @@
 
  <?php
  
- //	error_reporting(E_ALL);
+ //error_reporting(E_ALL);
 //ini_set('display_errors', 1);
 
 	$currentHTTP = "http://data-archive.library.ucla.edu/da_catalog/";	
-	include("SSDA_librarydatabase.php"); 
-
+	//SSDA_menubar.php has the menu code for da_catalog, da_catalog_fielder(fielder collection) and 'archive reources'
+	include("../_includes/SSDA_librarydatabase.php");  //SSDA_menubar.php has the menu code for da_catalog, da_catalog_fielder(fielder collection) and 'archive reources'
+	// class for database connections
+	include "../_classes/class.Database.php";
+// Define configuration
+// define info pulled from SSDA_librarydatabase.php
+define("DB_HOST", $db_host);
+define("DB_PORT", $db_port);
+define("DB_USER", $db_username);
+define("DB_PASS", $db_password);
+define("DB_NAME", $db_name);
+	
+// should be adding "class.Database.php";	
+//function __autoload($class_name) {
+	// echo 'class.' . $class_name . '.php<br>';
+	//include 'class.' . $class_name . '.php';
+//}
+	
 // sql query statement
-	$query = "select distinct ucase(left(archive_db.title.Title,1)) as index_letter, count(*) as index_letter_count from archive_db.title where ucase(left(archive_db.title.Title,1)) regexp '^[A-Za-z]' and archive_db.title.Restricted != '*' group by index_letter";
-	// echo "<br>$query<br>";
-	
+$query = "select distinct ucase(left(archive_db.title.Title,1)) as index_letter, count(*) as index_letter_count from archive_db.title where ucase(left(archive_db.title.Title,1)) regexp '^[A-Za-z]' and archive_db.title.Restricted != '*' group by index_letter";
 
-	// PDO connect  
-	//$PDO_string = "mysql:host=".$db_host.";dbname=da_catalog";
-	$PDO_string = "mysql:host=" . $db_host . ";port=" . $db_port . ";dbname=" . $db_name;	
-	//echo "$PDO_string<br>";
+// echo "<br>$query<br>";
+
+// class.Database.php  is the class to make PDO connections
+// initialize new db connection instance
+$db = new Database();	 
 	
+// prepare query
+$db->prepareQuery($query);   	
+// execute query
+$result = $db->executeQuery();	 
 	
-	// this is where it seems to quit -----
-	$PDO_connection = new PDO($PDO_string, $db_username, $db_password);
-	//echo "$PDO_connection<br>";
-	
-	
-	 
-	 
-	 // PDO - create prepared statement
-	 $PDO_query = $PDO_connection->prepare($query);
-	 // PDO - execute the query
-	 $result = $PDO_query->execute();
-	 
-	 if (!$result) {
-		die ("Could not query the database: <br />". mysql_error());
-	}
-	
-	 
+//$result = $db->resultset();  // execute the query
+if (!$result) { 
+		die ("Could not query the database: <br />"); 		
+		}  // else {  echo "Successfully queried the database.<br>";   }  // for debugging
+
+
 		echo "<table id='alphaList' align='center'> ";
 		echo "<tr>";  // start a row
 		
 		$itemCount = 1;	  // count off the number of items in the alpha-block, 5 letters across
 		
-		while ($row = $PDO_query->fetch(PDO::FETCH_ASSOC))  {
-		// Non-PDO code ---------------------
-		//while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+		
+		while ($row = $db->getRow())  {
 			
 			$index_letter = $row[ "index_letter" ];
 			$index_letter_count = $row["index_letter_count"];
@@ -96,10 +104,9 @@
 		}
 	echo "</table>";
 	
-	// close the connection
-	// mysql_close($connection);		
-	$PDO_connection = null;
-	
+	// _destructor class closes connection
+	// close the connection		
+	//$PDO_connection = null;
 		
 	?>
 </div>  <!--end content -->
@@ -107,5 +114,3 @@
 </body>
 
 </html>
-
-
