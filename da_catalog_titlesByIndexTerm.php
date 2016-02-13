@@ -64,9 +64,9 @@
 	$indexTerm =  htmlspecialchars($_GET['indexTerm'], ENT_QUOTES); 
 	 
 	// check, if NOT set 
-	if (!isset($indexTerm)) { 
-		echo "<span style='margin-left: 0; text-align: center; background-color: powderblue;'><a href='mobindex.html'>No citations selected. Return to catalog.</a></span><br>";
-		die ("No citations selected.");
+	if (empty($indexTerm)) { 
+		echo "<span style='margin-left: 0; text-align: center; background-color: powderblue;'><a href='da_catalog_titles.php'>Return to catalog.</a></span><br>";
+		die ("Nothing selected.");
 		
 		}
 		

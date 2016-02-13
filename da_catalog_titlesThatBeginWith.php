@@ -77,8 +77,8 @@
 	 
 	// check, if NOT set 
 	if (empty($index_letter)) { 
-		echo "<span style='margin-left: 0; text-align: center; background-color: powderblue;'><a href='da_catalog_titles.php'>No citations selected. Return to catalog.</a></span><br>";
-		die ("No citations selected.");
+		echo "<span style='margin-left: 0; text-align: center; background-color: powderblue;'><a href='da_catalog_titles.php'>Return to catalog.</a></span><br>";
+		die ("Nothing selected.");
 		
 		}
 		

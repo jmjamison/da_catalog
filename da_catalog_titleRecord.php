@@ -93,9 +93,9 @@
 	//echo $queryDatasetRecords . "<br>"; 
 	 
 	// check, if NOT set 
-	if (!isset($studynumber)) {  //   remove $title test, this will eventually be phased out as redundent -  or !isset($_GET['title'])  - jmj120409
-		echo "<span style='margin-left: 0; text-align: center; background-color: powderblue;'><a href='mobindex.html'>No citations selected. Return to catalog.</a></span><br>";
-		die ("No citations selected.");
+	if (empty($studynumber)) {  //   remove $title test, this will eventually be phased out as redundent -  or !isset($_GET['title'])  - jmj120409
+		echo "<span style='margin-left: 0; text-align: center; background-color: powderblue;'><a href='da_catalog_titles.php'>Return to catalog.</a></span><br>";
+		die ("Nothing selected.");
 		
 		}
 	
