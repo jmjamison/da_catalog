@@ -21,7 +21,7 @@
   
   </div>
     </div>
-
+  
 
   
   <div class="l-region l-region--main-column">
@@ -397,8 +397,9 @@ if (!$result) {
 			//--------------------------------------------------------
 			//echo "<br>";
 			//echo "For material available to download from the Data Archve:<br>";
-			echo "Click on the <b>File Name</b> to download an individual file.<br>";
-			echo "<div id='downloadallfiles' >";
+			// 20160502jmj: remove the download note since the Library site doesn't support downloads
+			//echo "Click on the <b>File Name</b> to download an individual file.<br>";
+			//echo "<div id='downloadallfiles' >";
 			//  12-15-09jmj
 			//  if there is 1 or more - >= 1 - datasets that can be downloaded from the DATA ARCHIVE 
 			//  after the dataset list is written out, javascript at the end of this section will write in thelines
@@ -474,11 +475,12 @@ if (!$result) {
 					
 				} elseif (stristr ($filetype, "SDA Online Analysis")) { // archive sda files (in-house); $filetype, $dsname, $note
 				
+					//20160219jmj:  update the sda address to the current library site
 					//$sda_onlineanalysis_link="http://zuma.sscnet.ucla.edu/issr/da/sdaweb/cgi-bin/hsda?harc";
-					$sda_onlineanalysis_link="http://sda.sscnet.ucla.edu/cgi-bin/hsda?harc";
+					$sda_onlineanalysis_link="http://sda.library.ucla.edu/sdaweb/analysis/?dataset=";
 					echo "<TD>"  .  $filetype . "</TD>";  // which would be 'SDA online analysis' 
 					echo "<TD>" . $note  . " ** SDA</TD>";     // something like the year, description, etc :  Codebook 1985-2001
-					echo "<TD><a href='" . $sda_onlineanalysis_link . $dsname . "+" . $dsname . "'>" . $filetype . " (" .  $dsname .  ") <a></TD>";
+					echo "<TD><a href='" . $sda_onlineanalysis_link . $dsname . "'>" . $filetype . " (" .  $dsname .  ") <a></TD>";
 					
 				} elseif (stristr ($filetype, "Web Access")) { 
 				
