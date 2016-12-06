@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-
- 
 <title>Social Science Data Archive | UCLA Library</title>
-
  <?php include("../_includes/SSDA_LibraryTopSidePanel.php") ?>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="../_css/mobile-collapsible.css" rel="stylesheet" type="text/css">
@@ -74,7 +71,7 @@
 <!-- -->
 <!-- -->
 
-<H2 align="center">Titles That Begin With The Letter...</H2>
+<div class="col"><H2 align="center">Titles That Begin With The Letter...</H2>
 <!-- data archive  menubar - library in-house version  -->
 <?php
  
@@ -123,7 +120,10 @@ if (!$result) {
 			
 			$index_letter = $row[ "index_letter" ];
 			$index_letter_count = $row["index_letter_count"];
-			echo "<td><A HREF= '" . $currentHTTP . "da_catalog_titlesThatBeginWith.php?index_letter=$index_letter'>$index_letter</a>&nbsp;($index_letter_count&nbsp;titles)</td>";
+			
+//NOTE:  IMPORTANT. data-role='none' must be added for the links to work.
+// has to do with jQuery mobile quirk.    20161205jmj
+			echo "<td><a href= '" . $currentHTTP . "da_catalog_titlesThatBeginWith.php?index_letter=$index_letter' data-role='none'>$index_letter</a>&nbsp;($index_letter_count&nbsp;titles)</td>";
 			
 			if ($itemCount < 5) {			
 			
